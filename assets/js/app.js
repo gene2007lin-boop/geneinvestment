@@ -64,13 +64,39 @@ document.addEventListener('DOMContentLoaded',async()=>{
     if (el('#about-content')) el('#about-content').innerHTML = `<p>${(DATA.about && DATA.about.text) || ''}</p>`;
 
     const projectsList = el('#projects-list');
-    if (projectsList && (DATA.projects || []).length){
-      DATA.projects.forEach(p=>{
+    const tagsContainer = el('#project-tags');
+    const allTags = new Set();
+    function renderProjects(filterTag=null, query=''){
+      if(!projectsList) return;
+      projectsList.innerHTML = '';
+      (DATA.projects||[]).forEach((p, idx)=>{
+        const text = `${p.title} ${p.desc} ${(p.tags||[]).join(' ')}`.toLowerCase();
+        if(query && !text.includes(query)) return;
+        if(filterTag && !(p.tags||[]).includes(filterTag)) return;
         const card = document.createElement('div'); card.className='card';
-        card.innerHTML = `<h3>${p.title}</h3><p>${p.desc}</p>${p.link?`<p><a href="${p.link}" target="_blank" rel="noopener">查看專案</a></p>`:''}`;
+        const thumbStyle = p.image ? `style="background-image:url('${p.image}')"` : '';
+        const tagsHtml = (p.tags||[]).map(t=>`<span class=\"tag\">${t}</span>`).join(' ');
+        const actions = [];
+        if(p.live) actions.push(`<a class=\"action-btn\" href=\"${p.live}\" target=\"_blank\">Live</a>`);
+        if(p.repo) actions.push(`<a class=\"action-btn\" href=\"${p.repo}\" target=\"_blank\">Repo</a>`);
+        card.innerHTML = `<div class=\"thumb\" ${thumbStyle}></div><h3>${p.title}</h3><p>${p.desc}</p><div class=\"card-tags\">${tagsHtml}</div><div class=\"card-actions\">${actions.join(' ')}</div>`;
+        card.addEventListener('click', (e)=>{ if(e.target.tagName.toLowerCase()!=='a') openProjectModal(p) });
         projectsList.appendChild(card);
       })
     }
+    // collect tags
+    (DATA.projects||[]).forEach(p=> (p.tags||[]).forEach(t=> allTags.add(t)));
+    if(tagsContainer && allTags.size){
+      tagsContainer.innerHTML = '';
+      const anyBtn = document.createElement('button'); anyBtn.textContent='All'; anyBtn.className='active';
+      anyBtn.addEventListener('click', ()=>{ Array.from(tagsContainer.querySelectorAll('button')).forEach(b=>b.classList.remove('active')); anyBtn.classList.add('active'); renderProjects(null, (el('#project-search')||{value:''}).value.trim().toLowerCase()) });
+      tagsContainer.appendChild(anyBtn);
+      Array.from(allTags).sort().forEach(t=>{
+        const b=document.createElement('button'); b.textContent=t; b.addEventListener('click', ()=>{ Array.from(tagsContainer.querySelectorAll('button')).forEach(b=>b.classList.remove('active')); b.classList.add('active'); renderProjects(t, (el('#project-search')||{value:''}).value.trim().toLowerCase()) });
+        tagsContainer.appendChild(b);
+      })
+    }
+    renderProjects(null, (el('#project-search')||{value:''}).value.trim().toLowerCase());
 
     const skillsList = el('#skills-list');
     if (skillsList && (DATA.skills||[]).length){
@@ -199,14 +225,7 @@ document.addEventListener('DOMContentLoaded',async()=>{
     const search = el('#project-search');
     if(search){
       const debounce = (fn, wait=200)=>{ let t; return (...a)=>{ clearTimeout(t); t = setTimeout(()=>fn(...a), wait) } }
-      const doFilter = ()=>{
-        const q = search.value.trim().toLowerCase();
-        const cards = document.querySelectorAll('#projects-list .card');
-        cards.forEach(c=>{
-          const text = (c.textContent||'').toLowerCase();
-          c.style.display = q ? (text.includes(q) ? '' : 'none') : '';
-        })
-      }
+      const doFilter = ()=>{ const q = search.value.trim().toLowerCase(); renderProjects((tagsContainer && tagsContainer.querySelector('button.active') && tagsContainer.querySelector('button.active').textContent!=='All') ? tagsContainer.querySelector('button.active').textContent : null, q) }
       search.addEventListener('input', debounce(doFilter,200));
       // keyboard: press / to focus search
       document.addEventListener('keydown', (e)=>{
@@ -253,5 +272,20 @@ document.addEventListener('DOMContentLoaded',async()=>{
     }
 
   })();
+
+  // Project modal functions
+  function openProjectModal(p){
+    const modal = document.getElementById('project-modal');
+    const content = document.getElementById('modal-content');
+    if(!modal||!content) return;
+    content.innerHTML = `<h3>${p.title}</h3>${p.image?`<img src="${p.image}" alt="${p.title}" loading="lazy"/>`:''}<p>${p.desc}</p><p>${(p.tags||[]).map(t=>`<span class=\"tag\">${t}</span>`).join(' ')}</p><p>${p.live?`<a class=\"btn\" href=\"${p.live}\" target=\"_blank\">Live</a>`:''} ${(p.repo?`<a class=\"btn\" href=\"${p.repo}\" target=\"_blank\">Repo</a>`:'')}</p>`;
+    modal.classList.remove('hidden'); modal.setAttribute('aria-hidden','false');
+  }
+  document.addEventListener('DOMContentLoaded', ()=>{
+    const close = document.getElementById('modal-close');
+    const modal = document.getElementById('project-modal');
+    if(close) close.addEventListener('click', ()=>{ if(modal){ modal.classList.add('hidden'); modal.setAttribute('aria-hidden','true'); } });
+    if(modal) modal.addEventListener('click', (e)=>{ if(e.target===modal){ modal.classList.add('hidden'); modal.setAttribute('aria-hidden','true'); } });
+  });
 
 

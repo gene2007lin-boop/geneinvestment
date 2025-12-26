@@ -8,17 +8,26 @@
     {
       "title": "Project Alpha",
       "desc": "一個展示 UI 與互動細節的前端專案，使用純 HTML/CSS/JS 製作。可作為作品集範例。",
-      "link": "https://example.com/project-alpha"
+      "live": "https://example.com/project-alpha",
+      "repo": "https://github.com/example/project-alpha",
+      "tags": ["UI","Frontend"],
+      "image": "assets/img/project-alpha.png"
     },
     {
       "title": "Project Beta",
       "desc": "另一個作品，強調響應式設計與簡單動畫效果。",
-      "link": "https://example.com/project-beta"
+      "live": "https://example.com/project-beta",
+      "repo": "https://github.com/example/project-beta",
+      "tags": ["Responsive","Animation"],
+      "image": "assets/img/project-beta.png"
     },
     {
       "title": "Project Gamma",
       "desc": "示範如何在靜態網站中提供互動式內容與本地搜尋功能。",
-      "link": "https://example.com/project-gamma"
+      "live": "https://example.com/project-gamma",
+      "repo": "https://github.com/example/project-gamma",
+      "tags": ["Search","Demo"],
+      "image": "assets/img/project-gamma.png"
     }
   ],
   "skills": ["HTML", "CSS", "JavaScript", "Responsive Design", "Accessibility"],
