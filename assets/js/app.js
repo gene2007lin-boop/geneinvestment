@@ -178,12 +178,32 @@ document.addEventListener('DOMContentLoaded',async()=>{
     function handleQuery(q){ const matches = findBestMatches(q,3); if(!matches.length){ const fallback='抱歉，我沒在資料中找到明確答案。試試其他問法。'; addMessage(fallback,'bot'); lastAnswer=fallback; return } const top=matches[0]; const lines=[]; lines.push(`${top.doc.title}: ${top.doc.text}`); if(top.doc.meta && top.doc.meta.link) lines.push(`來源連結: ${top.doc.meta.link}`); const out=lines.join('\n\n'); addMessage(out,'bot'); lastAnswer=out }
 
     if (rewriteBtn) rewriteBtn.addEventListener('click', ()=>{ if(!lastAnswer){ addMessage('先問一個問題取得答案，再用此功能生成 Email 範本。','bot'); return } const subject=`關於：${shorten(firstLine(lastAnswer),60)}`; const body=`您好，\n\n我想和您分享以下資料：\n\n${lastAnswer}\n\n期待您的回覆。\n\n謝謝，\n${DATA.name||'Your Name'}`; const email=`Subject: ${subject}\n\n${body}`; addMessage(email,'bot'); lastAnswer=email })
-    if (summarizeBtn) summarizeBtn.addEventListener('click', ()=>{ if(!lastAnswer){ addMessage('先取得回答，才能摘要它。','bot'); return } const s=summarizeText(lastAnswer); addMessage(`摘要： ${s}`,'bot'); lastAnswer=s })
+    if (summarizeBtn) summarizeBtn.addEventListener('click', ()=>{ if(!lastAnswer){ addMessage('先取得回答，才能摘要它。','bot'); return } const s=summarizeText(lastAnswer,2); addMessage(`摘要： ${s}`,'bot'); lastAnswer=s })
 
     // helpers
     function firstLine(s){return s.split('\n')[0]||s}
     function shorten(s,n){return s.length>n? s.slice(0,n-1)+'…': s}
-    function summarizeText(s){ const parts = s.match(/[^\.\!\?。！？]+[\.\!\?。！？]?/g) || [s]; return parts.slice(0,2).join(' ').trim() }
+    function summarizeText(s, maxSentences=2){
+      // extractive summarizer: score sentences by token frequency overlap
+      const parts = s.match(/[^\.\!\?。！？]+[\.\!\?。！？]?/g) || [s];
+      const sentences = parts.map(p=>p.trim()).filter(Boolean);
+      if(sentences.length <= maxSentences) return sentences.join(' ').trim();
+      // build frequency map of all tokens
+      const allTokens = tokenize(s);
+      const freq = {};
+      allTokens.forEach(t=> freq[t] = (freq[t]||0)+1);
+      const scores = sentences.map(sent=>{
+        const toks = tokenize(sent);
+        let score = 0;
+        toks.forEach(t=>{ score += (freq[t]||0); });
+        // mild length boost
+        score = score * (1 + Math.min(0.5, toks.length/60));
+        return score;
+      });
+      // pick top-scoring sentence indices, preserve original order
+      const idxs = scores.map((sc,i)=>[sc,i]).sort((a,b)=>b[0]-a[0]).slice(0,maxSentences).map(x=>x[1]).sort((a,b)=>a-b);
+      return idxs.map(i=>sentences[i]).join(' ').trim();
+    }
     function escapeHtml(s){ return String(s).replace(/[&<>\"']/g, (m)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])) }
 
     // menu toggle
