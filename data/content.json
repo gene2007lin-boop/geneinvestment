@@ -1,11 +1,34 @@
 {
   "name": "Gene Lin",
-  "tagline": "前端工程師 • 靜態網站展示",
-  "about": "我是前端工程師，喜歡用簡潔的工具把想法變成介面。這個網站為純靜態範例，無後端。",
+  "tagline": "前端工程師 / 靜態網站範例",
+  "about": {
+    "text": "這是一個靜態個人網站範例。可以在 data/content.json 修改這段 About 內容來介紹你自己。網站含一個 client-side 的 AI 助手，可在本地搜尋並回答關於 About、Projects、FAQ 的問題，無需任何後端或 API 金鑰。"
+  },
   "projects": [
-    {"title":"個人網站","desc":"使用 HTML/CSS/JS 建置的靜態個人網站。","link":"https://github.com/gene2007lin-boop/geneinvestment"},
-    {"title":"小工具","desc":"小型前端實驗與元件庫。","link":"#"}
+    {
+      "title": "Project Alpha",
+      "desc": "一個展示 UI 與互動細節的前端專案，使用純 HTML/CSS/JS 製作。可作為作品集範例。",
+      "link": "https://example.com/project-alpha"
+    },
+    {
+      "title": "Project Beta",
+      "desc": "另一個作品，強調響應式設計與簡單動畫效果。",
+      "link": "https://example.com/project-beta"
+    },
+    {
+      "title": "Project Gamma",
+      "desc": "示範如何在靜態網站中提供互動式內容與本地搜尋功能。",
+      "link": "https://example.com/project-gamma"
+    }
   ],
-  "skills": ["HTML","CSS","JavaScript","React (experiment)","Accessibility"],
-  "contact": "genelin41@hotmail.com"
+  "skills": ["HTML", "CSS", "JavaScript", "Responsive Design", "Accessibility"],
+  "contact": [
+    {"type":"link","label":"GitHub","value":"https://github.com/gene2007lin-boop"},
+    {"type":"link","label":"LinkedIn","value":"https://www.linkedin.com/"},
+    {"type":"email","label":"Email","value":"genelin41@hotmail.com"}
+  ],
+  "faq": [
+    "如何部署此靜態網站到 GitHub Pages？請將檔案推上 GitHub，然後在 Settings -> Pages 選擇 main branch / root 作為來源，儲存後等待幾分鐘。",
+    "本地 AI 助手如何運作？助手在瀏覽器裡建立簡單的詞頻向量（TF）並用 cos 相似度比對使用者問題，然後回傳最相關的內容段落，這是本地運算，不會傳送到伺服器。"
+  ]
 }
