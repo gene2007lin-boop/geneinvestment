@@ -24,7 +24,7 @@
   "skills": ["HTML", "CSS", "JavaScript", "Responsive Design", "Accessibility"],
   "contact": [
     {"type":"link","label":"GitHub","value":"https://github.com/gene2007lin-boop"},
-    {"type":"link","label":"LinkedIn","value":"https://www.linkedin.com/"},
+    {"type":"link","label":"LinkedIn","value":"https://www.linkedin.com/in/gene-lin-190973249/"},
     {"type":"email","label":"Email","value":"genelin41@hotmail.com"}
   ],
   "faq": [

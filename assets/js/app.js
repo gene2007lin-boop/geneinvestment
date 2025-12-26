@@ -89,6 +89,24 @@ document.addEventListener('DOMContentLoaded',async()=>{
       }
     }
 
+    // Render social icons in header (if container exists)
+    const socialEl = el('#social-links');
+    if (socialEl && Array.isArray(DATA.contact)){
+      const getIcon = (label)=>{
+        const l = (label||'').toLowerCase();
+        if (l.includes('github')) return '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 .5a12 12 0 00-3.8 23.4c.6.1.8-.2.8-.5v-1.9c-3.3.7-4-1.4-4-1.4-.5-1.2-1.2-1.5-1.2-1.5-1-.7.1-.7.1-.7 1.1.1 1.7 1.2 1.7 1.2 1 .1.8 1.6 2.3 2.1.4.2.9.2 1.3.2s.9 0 1.3-.2c1.5-.5 1.3-2 2.3-2.1 0 0 .6-1.1 1.7-1.2 0 0 1.1 0 .1.7 0 0-.7.3-1.2 1.5 0 0-.7 2.1-4 1.4v1.9c0 .3.2.6.8.5A12 12 0 0012 .5z"/></svg>';
+        if (l.includes('linkedin')) return '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4.98 3.5a2.5 2.5 0 11-.001 5.001A2.5 2.5 0 014.98 3.5zM3 9h4v12H3zM9 9h3.8v1.6h.1c.5-.9 1.8-1.6 3.7-1.6 4 0 4.7 2.6 4.7 6V21h-4v-5.2c0-1.2 0-2.8-1.7-2.8-1.7 0-2 1.4-2 2.7V21H9V9z"/></svg>';
+        if (l.includes('twitter')) return '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.46 6c-.77.35-1.6.58-2.46.69a4.23 4.23 0 001.85-2.33c-.82.5-1.72.86-2.68 1.06A4.18 4.18 0 0015.5 4c-2.3 0-4.18 1.86-4.18 4.16 0 .33.04.66.11.97C7.69 9.99 4.07 8.1 1.64 5.16c-.36.62-.57 1.33-.57 2.09 0 1.44.73 2.71 1.84 3.46a4.12 4.12 0 01-1.9-.52v.05c0 2.02 1.44 3.7 3.35 4.09-.35.1-.72.15-1.09.15-.27 0-.54-.03-.8-.08.54 1.66 2.06 2.87 3.87 2.9A8.4 8.4 0 012 19.54a11.8 11.8 0 006.29 1.84c7.55 0 11.68-6.26 11.68-11.68v-.53A8.2 8.2 0 0024 6.6a8.2 8.2 0 01-2.36.65z"/></svg>';
+        return '';
+      }
+      DATA.contact.filter(c=>c.type==='link').forEach(c=>{
+        const a = document.createElement('a');
+        a.href = c.value; a.target = '_blank'; a.rel='noopener'; a.title = c.label || c.value;
+        a.innerHTML = getIcon(c.label || c.value) || (c.label || c.value);
+        socialEl.appendChild(a);
+      })
+    }
+
     // === Assistant logic (simple TF cosine similarity) ===
     const docs = [];
     function addDoc(id,title,text,meta={}){ if (text) docs.push({id,title,text,meta}) }
