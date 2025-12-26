@@ -115,7 +115,15 @@ document.addEventListener('DOMContentLoaded',async()=>{
     (DATA.projects||[]).forEach((p,i)=>addDoc(`project-${i}`, p.title, p.desc, {link:p.link}));
 
     const STOP = new Set(["the","a","an","and","or","is","are","of","在","與","的","是","我","你","他"]);
-    function tokenize(s){return (s||'').toLowerCase().replace(/[^^\p{L}\p{N}\s]/gu,' ').split(/\s+/).filter(Boolean).filter(t=>!STOP.has(t))}
+    function tokenize(s){
+      // remove punctuation and keep unicode letters/numbers
+      try{
+        return (s||'').toLowerCase().replace(/[^\p{L}\p{N}\s]/gu,' ').split(/\s+/).filter(Boolean).filter(t=>!STOP.has(t));
+      }catch(e){
+        // fallback for older browsers without unicode flag support
+        return (s||'').toLowerCase().replace(/[^\w\s]/g,' ').split(/\s+/).filter(Boolean).filter(t=>!STOP.has(t));
+      }
+    }
     function tf(tokens){const m=new Map();tokens.forEach(t=>m.set(t,(m.get(t)||0)+1));return m}
     function dot(a,b){let out=0;for(const [k,v] of a.entries()) if(b.has(k)) out+=v*b.get(k); return out}
     function norm(m){let s=0;for(const v of m.values()) s+=v*v; return Math.sqrt(s)}
@@ -190,13 +198,23 @@ document.addEventListener('DOMContentLoaded',async()=>{
     // Project search
     const search = el('#project-search');
     if(search){
-      search.addEventListener('input', ()=>{
+      const debounce = (fn, wait=200)=>{ let t; return (...a)=>{ clearTimeout(t); t = setTimeout(()=>fn(...a), wait) } }
+      const doFilter = ()=>{
         const q = search.value.trim().toLowerCase();
         const cards = document.querySelectorAll('#projects-list .card');
         cards.forEach(c=>{
           const text = (c.textContent||'').toLowerCase();
           c.style.display = q ? (text.includes(q) ? '' : 'none') : '';
         })
+      }
+      search.addEventListener('input', debounce(doFilter,200));
+      // keyboard: press / to focus search
+      document.addEventListener('keydown', (e)=>{
+        if(e.key === '/' && document.activeElement !== search){ e.preventDefault(); search.focus(); }
+        if(e.key === 't'){ // quick theme toggle
+          const next = document.body.classList.contains('theme-light') ? 'dark' : 'light';
+          applyTheme(next);
+        }
       })
     }
 

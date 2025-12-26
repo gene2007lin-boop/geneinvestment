@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="assets/css/styles.css" />
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
   <header class="site-header">
     <div class="container nav">
       <a class="brand" href="#home" id="brand">Gene Lin</a>
@@ -32,7 +33,7 @@
     </div>
   </header>
 
-  <main>
+  <main id="main-content">
     <section class="hero" id="home">
       <div class="container">
           <h1 id="site-name">你好，我是 <span>Gene Lin</span></h1>
@@ -63,8 +64,11 @@
       <h2>Contact</h2>
       <p id="contact-list"></p>
       <form id="contact-form" class="contact-form" aria-label="Contact form">
+        <label class="sr-only" for="cf-name">Your name</label>
         <input id="cf-name" type="text" placeholder="Your name" required />
+        <label class="sr-only" for="cf-email">Your email</label>
         <input id="cf-email" type="email" placeholder="your@email.com" required />
+        <label class="sr-only" for="cf-message">Message</label>
         <textarea id="cf-message" placeholder="Message..." rows="4" required></textarea>
         <div class="cf-actions">
           <button type="submit" class="btn">Send (mailto)</button>

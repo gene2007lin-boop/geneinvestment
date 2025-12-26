@@ -12,10 +12,14 @@ self.addEventListener('install', (e)=>{
 });
 
 self.addEventListener('fetch', (e)=>{
-  e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).then(res=>{
-    if(!e.request.url.startsWith('http')) return res;
-    const resClone = res.clone();
-    caches.open(CACHE_NAME).then(c=>c.put(e.request,resClone));
-    return res;
-  }).catch(()=>caches.match('/index.html'))));
+  // stale-while-revalidate: respond from cache immediately, update in background
+  e.respondWith(
+    caches.match(e.request).then(cached => {
+      const networkFetch = fetch(e.request).then(networkRes => {
+        try{ if(networkRes && networkRes.ok){ const copy = networkRes.clone(); caches.open(CACHE_NAME).then(cache=>cache.put(e.request, copy)); } }catch(e){}
+        return networkRes;
+      }).catch(()=>null);
+      return cached || networkFetch || caches.match('/index.html');
+    })
+  );
 });
