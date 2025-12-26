@@ -74,3 +74,27 @@ small.muted{color:var(--muted)}
 @media (max-width:700px){
   .social-links{display:none}
 }
+
+/* header actions */
+.header-actions{display:flex;gap:8px;align-items:center;margin-left:12px}
+#theme-toggle{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:6px 8px;border-radius:8px;color:var(--text);cursor:pointer}
+#resume-btn{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:8px 12px;border-radius:8px;color:var(--text);text-decoration:none}
+
+/* project search */
+.projects-controls{margin:12px 0}
+.projects-controls input{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--text)}
+
+/* contact form */
+.contact-form{display:flex;flex-direction:column;gap:8px;max-width:560px}
+.contact-form input,.contact-form textarea{padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--text)}
+.cf-actions{display:flex;gap:8px}
+.muted{color:var(--muted);font-size:14px}
+
+/* assistant message actions */
+.msg .actions{display:flex;gap:8px;margin-top:6px}
+.action-btn{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:6px 8px;border-radius:8px;color:var(--muted);cursor:pointer;font-size:13px}
+.action-btn:hover{color:var(--text);border-color:rgba(255,255,255,0.08)}
+
+/* theme light */
+.theme-light{--bg:#f7fafc;--card:#ffffff;--accent:#2563eb;--muted:#555;--text:#0b1220;background:linear-gradient(180deg,#f8fafc 0%, #eef2ff 100%)}
+

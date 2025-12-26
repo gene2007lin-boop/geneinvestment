@@ -157,3 +157,83 @@ document.addEventListener('DOMContentLoaded',async()=>{
 
   })();
 
+  // Additional features: theme toggle, contact form, project search, assistant actions, service worker
+  (function(){
+    function el(s){return document.querySelector(s)}
+    // Theme toggle
+    const themeToggle = el('#theme-toggle');
+    const root = document.documentElement;
+    function applyTheme(t){ if(t==='light') document.body.classList.add('theme-light'); else document.body.classList.remove('theme-light'); localStorage.setItem('theme', t) }
+    const saved = localStorage.getItem('theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme:light)').matches ? 'light' : 'dark');
+    applyTheme(saved);
+    if(themeToggle){ themeToggle.addEventListener('click', ()=>{ const next = document.body.classList.contains('theme-light') ? 'dark' : 'light'; applyTheme(next) }) }
+
+    // Contact form
+    const form = el('#contact-form');
+    if(form){
+      const status = el('#cf-status');
+      form.addEventListener('submit', (e)=>{
+        e.preventDefault();
+        const name = el('#cf-name').value.trim();
+        const email = el('#cf-email').value.trim();
+        const msg = el('#cf-message').value.trim();
+        if(!name||!email||!msg){ status.textContent='Please fill all fields.'; return }
+        const subject = encodeURIComponent(`Contact from ${name}`);
+        const body = encodeURIComponent(`${msg}\n\nFrom: ${name} <${email}>`);
+        const mailto = `mailto:genelin41@hotmail.com?subject=${subject}&body=${body}`;
+        window.location.href = mailto;
+        status.textContent = 'Opening mail client...';
+      });
+      el('#cf-clear').addEventListener('click', ()=>{ el('#cf-name').value=''; el('#cf-email').value=''; el('#cf-message').value=''; if(el('#cf-status')) el('#cf-status').textContent=''; })
+    }
+
+    // Project search
+    const search = el('#project-search');
+    if(search){
+      search.addEventListener('input', ()=>{
+        const q = search.value.trim().toLowerCase();
+        const cards = document.querySelectorAll('#projects-list .card');
+        cards.forEach(c=>{
+          const text = (c.textContent||'').toLowerCase();
+          c.style.display = q ? (text.includes(q) ? '' : 'none') : '';
+        })
+      })
+    }
+
+    // Assistant: add copy and source buttons to bot messages
+    const messagesContainer = el('#messages');
+    const origAddMessage = window.__orig_addMessage__;
+    // We didn't expose original; instead augment existing DOM after messages appended via mutation observer
+    if(messagesContainer){
+      const mo = new MutationObserver((list)=>{
+        for(const rec of list){
+          for(const n of rec.addedNodes){
+            if(!(n instanceof HTMLElement)) continue;
+            if(n.classList.contains('msg') && !n.dataset.enhanced){
+              n.dataset.enhanced = '1';
+              if(n.classList.contains('bot')){
+                const actions = document.createElement('div'); actions.className='actions';
+                const copyBtn = document.createElement('button'); copyBtn.className='action-btn'; copyBtn.textContent='Copy';
+                copyBtn.addEventListener('click', ()=>{ navigator.clipboard.writeText(n.innerText).then(()=>{ copyBtn.textContent='Copied'; setTimeout(()=>copyBtn.textContent='Copy',1200) }) });
+                actions.appendChild(copyBtn);
+                // find source link in text
+                const txt = n.innerText || '';
+                const m = txt.match(/來源連結:\s*(https?:\/\/[^\s]+)/);
+                if(m){ const linkBtn = document.createElement('a'); linkBtn.className='action-btn'; linkBtn.textContent='Open source'; linkBtn.href = m[1]; linkBtn.target='_blank'; linkBtn.rel='noopener'; actions.appendChild(linkBtn); }
+                n.appendChild(actions);
+              }
+            }
+          }
+        }
+      });
+      mo.observe(messagesContainer,{childList:true,subtree:false});
+    }
+
+    // Service worker registration
+    if('serviceWorker' in navigator){
+      navigator.serviceWorker.register('/sw.js').catch(()=>console.warn('SW register failed'));
+    }
+
+  })();
+
+

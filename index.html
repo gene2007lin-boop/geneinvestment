@@ -5,12 +5,22 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>個人網站</title>
   <meta name="description" content="個人網站（靜態）" />
+  <!-- SEO / Open Graph -->
+  <meta property="og:title" content="Gene Lin — Portfolio" />
+  <meta property="og:description" content="前端工程師 • 靜態作品集與本地 AI 助手" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary" />
+  <link rel="canonical" href="https://gene2007lin-boop.github.io/geneinvestment/" />
   <link rel="stylesheet" href="assets/css/styles.css" />
 </head>
 <body>
   <header class="site-header">
     <div class="container nav">
       <a class="brand" href="#home" id="brand">Gene Lin</a>
+      <div class="header-actions">
+        <button id="theme-toggle" aria-label="Toggle theme">🌓</button>
+        <a id="resume-btn" class="btn" href="/resume.pdf" download>Download Resume</a>
+      </div>
       <button id="menu-btn" class="menu-btn" aria-label="Open menu">☰</button>
       <nav id="nav-links" class="nav-links">
         <a href="#about">About</a>
@@ -38,6 +48,9 @@
 
     <section class="container projects" id="projects">
       <h2>Projects</h2>
+      <div class="projects-controls">
+        <input id="project-search" placeholder="Search projects or tags..." />
+      </div>
       <div id="projects-list" class="grid"></div>
     </section>
 
@@ -49,6 +62,16 @@
     <section class="container contact" id="contact">
       <h2>Contact</h2>
       <p id="contact-list"></p>
+      <form id="contact-form" class="contact-form" aria-label="Contact form">
+        <input id="cf-name" type="text" placeholder="Your name" required />
+        <input id="cf-email" type="email" placeholder="your@email.com" required />
+        <textarea id="cf-message" placeholder="Message..." rows="4" required></textarea>
+        <div class="cf-actions">
+          <button type="submit" class="btn">Send (mailto)</button>
+          <button type="button" id="cf-clear" class="btn">Clear</button>
+        </div>
+        <p id="cf-status" class="muted"></p>
+      </form>
     </section>
   </main>
 
