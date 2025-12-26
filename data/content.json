@@ -1,0 +1,11 @@
+{
+  "name": "林小明",
+  "tagline": "前端工程師 • 靜態網站展示",
+  "about": "我是前端工程師，喜歡用簡潔的工具把想法變成介面。這個網站為純靜態範例，無後端。",
+  "projects": [
+    {"title":"個人網站","desc":"使用 HTML/CSS/JS 建置的靜態個人網站。","link":"https://github.com/gene2007lin-boop/geneinvestment"},
+    {"title":"小工具","desc":"小型前端實驗與元件庫。","link":"#"}
+  ],
+  "skills": ["HTML","CSS","JavaScript","React (experiment)","Accessibility"],
+  "contact": "your.email@example.com"
+}

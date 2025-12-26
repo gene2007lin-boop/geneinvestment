@@ -1,0 +1,23 @@
+:root{
+  --bg:#0f1724; --card:#0b1320; --muted:#94a3b8; --accent:#7c3aed;
+  --glass: rgba(255,255,255,0.03);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,Arial,Helvetica,sans-serif;background:linear-gradient(180deg,#071126 0%,#071726 100%);color:#e6eef8;line-height:1.5}
+.container{max-width:980px;margin:0 auto;padding:28px}
+.site-header{backdrop-filter: blur(6px);background:transparent}
+.nav{display:flex;align-items:center;justify-content:space-between}
+.brand{font-weight:700;color:var(--accent);text-decoration:none}
+.menu-btn{display:none;background:none;border:0;color:inherit;font-size:20px}
+.nav-links a{color:var(--muted);margin-left:18px;text-decoration:none}
+.hero{padding:64px 0;text-align:left}
+.hero h1{font-size: clamp(28px, 4vw, 44px);margin:0 0 8px}
+.hero p{color:var(--muted);margin:0 0 16px}
+.btn{display:inline-block;background:var(--accent);color:white;padding:10px 16px;border-radius:8px;text-decoration:none}
+.about,.projects,.resume,.contact{padding:36px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.card{background:var(--glass);padding:16px;border-radius:10px;border:1px solid rgba(255,255,255,0.03)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{background:rgba(255,255,255,0.03);padding:6px 10px;border-radius:999px;color:var(--muted);font-size:14px}
+.site-footer{border-top:1px solid rgba(255,255,255,0.03);padding:18px 0;margin-top:40px}
+@media (max-width:700px){.nav-links{display:none}.menu-btn{display:block}}

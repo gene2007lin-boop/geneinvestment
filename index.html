@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>個人網站</title>
+  <meta name="description" content="個人網站（靜態）" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="#home" id="brand">Your Name</a>
+      <button id="menu-btn" class="menu-btn" aria-label="Open menu">☰</button>
+      <nav id="nav-links" class="nav-links">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#resume">Resume</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container">
+        <h1 id="site-name">你好，我是 <span>名字</span></h1>
+        <p id="site-tagline">前端工程師 • 靜態網站展示</p>
+        <a class="btn" href="#projects">查看專案</a>
+      </div>
+    </section>
+
+    <section class="container about" id="about">
+      <h2>About</h2>
+      <p id="about-text"></p>
+    </section>
+
+    <section class="container projects" id="projects">
+      <h2>Projects</h2>
+      <div id="projects-list" class="grid"></div>
+    </section>
+
+    <section class="container resume" id="resume">
+      <h2>Skills</h2>
+      <div id="skills-list" class="chips"></div>
+    </section>
+
+    <section class="container contact" id="contact">
+      <h2>Contact</h2>
+      <p id="contact-list"></p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© <span id="year"></span> Your Name</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
