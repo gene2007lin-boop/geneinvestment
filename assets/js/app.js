@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded',async()=>{
     about:'這是一段關於你的簡短自介。',
     projects:[],
     skills:[],
-    contact:'you@example.com'
+    contact:'genelin41@hotmail.com'
   }
 
   el('#site-name').innerHTML = `你好，我是 <span>${data.name}</span>`
