@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 220">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1">
+      <stop offset="0" stop-color="#7c3aed"/>
+      <stop offset="1" stop-color="#06b6d4"/>
+    </linearGradient>
+  </defs>
+  <rect width="100%" height="100%" rx="14" fill="#071428"/>
+  <rect x="20" y="18" width="360" height="184" rx="10" fill="url(#g)" opacity="0.12"/>
+  <g transform="translate(36,36)">
+    <rect width="320" height="140" rx="8" fill="#071428" stroke="#0b1220"/>
+    <rect x="14" y="12" width="120" height="14" rx="6" fill="#0b1220"/>
+    <rect x="14" y="36" width="280" height="10" rx="6" fill="#0b1220"/>
+    <rect x="14" y="56" width="260" height="10" rx="6" fill="#0b1220"/>
+    <rect x="14" y="76" width="200" height="10" rx="6" fill="#0b1220"/>
+    <circle cx="270" cy="24" r="18" fill="#06b6d4"/>
+    <text x="278" y="30" font-size="12" fill="#022" font-family="Arial" font-weight="700">AI</text>
+  </g>
+  <text x="28" y="190" font-size="18" fill="#e6eef8" font-family="Inter, Arial">Smart Notes</text>
+</svg>

@@ -29,6 +29,15 @@
       "tags": ["Search","Demo"],
       "image": "assets/img/project-gamma.png"
     }
+    ,
+    {
+      "title": "Smart Notes",
+      "desc": "Smart Notes 是一個離線優先的筆記 PWA，提供智能標籤、自動摘要與快速搜尋，支援匯出為 Markdown。此範例示意如何把小型 AI 功能整合到純前端應用中。\n\n主要功能：智能標籤、摘錄摘要、離線儲存、快速搜尋與 Markdown 匯出。\n技術：HTML/CSS/Vanilla JS、IndexedDB、Service Worker (PWA)。",
+      "live": "#",
+      "repo": "https://github.com/gene2007lin-boop/smart-notes-demo",
+      "tags": ["Productivity","PWA","IndexedDB"],
+      "image": "assets/img/project-smart-notes.svg"
+    }
   ],
   "skills": ["HTML", "CSS", "JavaScript", "Responsive Design", "Accessibility"],
   "contact": [
