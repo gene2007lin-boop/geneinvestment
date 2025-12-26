@@ -4,7 +4,7 @@ const els = (s)=>document.querySelectorAll(s)
 document.addEventListener('DOMContentLoaded',async()=>{
   const res = await fetch('data/content.json').then(r=>r.json()).catch(()=>null)
   const data = res||{
-    name:'你的名字',
+    name:'Gene Lin',
     tagline:'前端工程師',
     about:'這是一段關於你的簡短自介。',
     projects:[],
