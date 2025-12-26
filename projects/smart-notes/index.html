@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Smart Notes — Demo</title>
+  <meta name="description" content="Smart Notes demo: offline-first notes with tags, summary and export (client-only)." />
+  <link rel="stylesheet" href="../../assets/css/styles.css" />
+  <style>
+    main{max-width:960px;margin:28px auto;padding:20px}
+    .notes-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+    .note-card{background:var(--card);padding:12px;border-radius:10px}
+    .note-meta{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted)}
+    .note-tags{margin-top:8px}
+    .controls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+    textarea#note-text{min-height:120px}
+  </style>
+</head>
+<body>
+  <header class="site-header"><div class="container"><a class="brand" href="/">← Back</a><h1 style="display:inline-block;margin-left:16px">Smart Notes — Demo</h1></div></header>
+  <main>
+    <section class="card">
+      <h2>Create a note</h2>
+      <div class="controls">
+        <input id="note-title" placeholder="Title" />
+        <input id="note-tags" placeholder="tags (comma separated)" />
+        <button id="save-note" class="btn">Save</button>
+        <button id="export-md" class="btn">Export all => Markdown</button>
+        <button id="clear-all" class="btn">Clear all</button>
+      </div>
+      <textarea id="note-text" placeholder="Write your note... (supports multiple lines)"></textarea>
+    </section>
+
+    <section style="margin-top:20px">
+      <h2>Your notes</h2>
+      <div class="controls">
+        <input id="filter-tags" placeholder="Filter by tag" />
+        <input id="search-notes" placeholder="Search notes" />
+      </div>
+      <div id="notes-list" class="notes-grid"></div>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
